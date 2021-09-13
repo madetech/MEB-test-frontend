@@ -45,6 +45,10 @@ jobs:
         yarn install
         yarn build
         yarn test
+    - name: check for packages
+      run: |
+        ls -al
+        cat node_modules/.bin/react-scripts/bin/react-scripts.js
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
