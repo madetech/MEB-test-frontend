@@ -41,9 +41,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-        yarn install
-        yarn build
-        yarn test
+        npm install
         popd
     - name: 'Deploy to Azure Functions'
       uses: Azure/functions-action@v1
