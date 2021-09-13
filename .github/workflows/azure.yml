@@ -21,8 +21,8 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: 'MEB-test-frontend'   # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_NAME: 'MEB-test-frontend-fn'   # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.16.1'                # set this to the node version to use
 
 jobs:
@@ -40,14 +40,15 @@ jobs:
       run: mv production.env .env
     - name: npm install, build, and test
       run: |
-        # Build and test the project, then
-        # deploy to Azure Web App.
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
         yarn install
         yarn build
         yarn test
-    - name: 'Deploy to Azure WebApp'
-      uses: azure/webapps-deploy@v2
+        popd
+    - name: 'Deploy to Azure Functions'
+      uses: Azure/functions-action@v1
+      id: fa
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
