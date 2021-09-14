@@ -10,8 +10,23 @@ function App() {
     useEffect(() => {
       getData();
 
+
+      // fetch('URL_GOES_HERE', {
+      //    method: 'post',
+      //    headers: new Headers({
+      //      'Authorization': 'Basic '+btoa('username:password'),
+      //      'Content-Type': 'application/x-www-form-urlencoded'
+      //    }),
+      //    body: 'A=1&B=2'
+      //  });
+
       async function getData() {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: new Headers({
+            "Access-Control-Allow-Origin": "*"
+          })
+        });
         const data = await response.json();
 
         setFetchData(data) ;
