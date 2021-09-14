@@ -23,10 +23,11 @@ function App() {
       async function getData() {
         const response = await fetch(url, {
           method: 'GET',
-          headers: new Headers({
-            "Access-Control-Allow-Origin": "*"
-          })
+          mode: "no-cors"
+        }).then((res)=>{
+          console.log(res)
         });
+        console.log(response)
         const data = await response.json();
 
         setFetchData(data) ;
